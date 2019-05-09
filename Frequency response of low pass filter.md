@@ -1,0 +1,8 @@
+# Fourier-Analysis
+
+fs=25e6;			% Sampling rate
+cutOffFreq=1600;		% Cutoff frequency
+[b, a]=butter(2, cutOffFreq/(fs/2), 'low');
+[h, w]=freqz(b, a);
+semilogx(w/pi*fs/2,abs(h));title('Frequency response low-pass filter');
+grid on;
