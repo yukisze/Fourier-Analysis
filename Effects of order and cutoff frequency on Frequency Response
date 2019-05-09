@@ -1,0 +1,12 @@
+fs=12000;			
+fc=1600;		
+H=[];
+For n=1:8;
+	[b, a]=butter(n, fc /(fs/2), 'low');
+	[h, w]=freqz(b, a,100000,'whole');
+	H=[H, h];
+end
+semilogx(w/pi*fs/2, abs(H));
+title('Frequency response with different order');
+hold;
+legend('n=1','n=2','n=3','n=4','n=5','n=6','n=7','n=8');
