@@ -1,0 +1,35 @@
+cutoff = 1585;
+Fs = 180000;
+f = 1700;
+
+%semilogx(W*fs/(2*pi),20*log(abs(H)));
+
+for N = 5:8
+    [b,a]=butter(N, cutoff/(fs/2));
+    [H,W] = freqz(b,a,10000,'whole');
+    t = 0:1/Fs:10/f;
+    x = square(2*pi*t*f);
+    output=filter(b,a,x);
+    plot(t,output);
+    hold on;
+end
+title('Output Square Wave with different order')
+legend('n=5','n=6','n=7','n=8');
+
+N = 5;
+Fs = 180000;
+f = 1700;
+
+%semilogx(W*fs/(2*pi),20*log(abs(H)));
+
+for cutoff = 1600:400:2800
+    [b,a]=butter(N, cutoff/(fs/2));
+    [H,W] = freqz(b,a,10000,'whole');
+    t = 0:1/Fs:10/f;
+    x = square(2*pi*t*f);
+    output=filter(b,a,x);
+    plot(t,output);
+    hold on;
+end
+title('Output Square Wave with different cutoff frequency')
+legend('fc=1600','fc=2000','fc=2400','fc=2800');
