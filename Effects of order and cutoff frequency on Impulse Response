@@ -1,0 +1,28 @@
+fs=20000;			% Sampling rate
+cutOff=1600;		% Cutoff frequency
+H=[];
+for filterOrder=5:8;
+	[b, a]=butter(filterOrder, cutOff/(fs/2), 'low');
+	[h, w]=freqz(b, a, 100000, 'whole');
+	H =[H, h];
+end
+impulse = real(ifft(H));
+plot(impulse);
+xlim([0 70]);
+legend('n=5','n=6','n=7','n=8');
+title('Impulse response with different order');
+
+fs=20000;			% Sampling rate
+cutOff=1600;		% Cutoff frequency
+filterOrder = 5;
+H=[];
+for cutOff = 1600:300:2800;
+	[b, a]=butter(filterOrder, cutOff/(fs/2), 'low');
+	[h, w]=freqz(b, a, 100000, 'whole');
+	H =[H, h];
+end
+impulse = real(ifft(H));
+plot(impulse);
+xlim([0 50]);
+legend('fc=1600','fc=1900','fc=2200','fc=2500','fc = 2800');
+title('Impulse response with different cutoff frequency');
