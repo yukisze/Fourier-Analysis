@@ -10,3 +10,19 @@ semilogx(w/pi*fs/2, abs(H));
 title('Frequency response with different order');
 hold;
 legend('n=1','n=2','n=3','n=4','n=5','n=6','n=7','n=8');
+
+
+
+fs=12000;					
+H=[];
+for fc=1600:300:2800;
+	[b, a]=butter(5 , fc/(fs/2), 'low');
+	[h, w]=freqz(b, a,100000,'whole');
+	H=[H, h];
+end
+semilogx(w/pi*fs/2, abs(H));
+title('Frequency response with different cutoff frequency');
+hold;
+xlim([100 5000]);
+legend('fc=1600','fc=1900','fc=2200','fc=2500','fc = 2800');
+set(legend,'location','best');
