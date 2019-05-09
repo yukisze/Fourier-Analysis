@@ -1,0 +1,34 @@
+cutoff = 1585;
+fs = 15000;
+f_input = 1700;
+N = 2;
+scale = 100;
+display_scale = 100000;
+t = 0:1/fs:1/scale;
+
+input = square(f_input * 2*pi .* t);
+input = input * 0.5;
+
+input_F = fftshift(fft(input,fs));
+n = (length(input)-1)*scale;
+fshift = (-n/2:n/2-1)*(fs/n);
+
+figure(1);
+plot(fshift,abs(input_F));
+title('Frequency domain of input');
+
+[b,a]=butter(N, cutoff/(fs/2));
+[H,W]=freqz(b,a,512,'whole');
+output=filter(b,a,input);
+
+figure(2);
+plot(t(1:display_scale/f_input),output(1:display_scale/f_input));
+title('Output Square Wave')
+
+output_F = fftshift(fft(output,fs));
+n = (length(output)-1)*scale;
+fshift_o = (-n/2:n/2-1)*(fs/n);
+
+figure(3);
+plot(fshift_o,abs(output_F));
+title('Frequency domain of output');
